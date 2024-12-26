@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KL University Road Map</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 0 20px;
+        }
+
+        .navbar img {
+            height: 80px;
+            width: auto;
+        }
+
+        .navbar .links {
+            display: flex;
+            justify-content: center;
+            flex-grow: 1;
+        }
+
+        .navbar a {
+            color: red;
+            text-align: center;
+            padding: 10px 15px;
+            text-decoration: none;
+            margin: 0 30px;
+        }
+
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        #info-box {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin: 20px auto;
+            max-width: 900px;
+        }
+
+        #info-box h1 {
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        #map {
+            height: 800px;
+            width: 100%;
+            margin: 20px auto;
+            max-width: 1200px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        #scrolling-text {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #000;
+            color: #fff;
+            font-size: 50px;
+            font-weight: bold;
+            text-align: center;
+            overflow: hidden;
+            white-space: nowrap;
+            z-index: 1000;
+        }
+
+        #scrolling-text span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: scroll-text 10s linear infinite;
+        }
+
+        @keyframes scroll-text {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <img src="nakul.png" alt="Left Logo">
+    <img src="nakul1.png" alt="Right Logo">
+    <div class="links">
+        <a href="calculator.html">CGPA-Calculator</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="searchfaculty.html">Search Faculty</a>
+        <a href="searchcourses.html">Search Courses</a>
+        <a href="attendance.html">Attendance Calculator</a>
+        <a href="about.html">About Us</a>
+    </div>
+</div>
+
+<div id="info-box">
+    <h1>KL UNIVERSITY ROAD MAP</h1>
+    <p>Click on the map to pin a location and get directions from your current location.</p>
+</div>
+<div id="map"></div>
+<div id="scrolling-text">
+    <span>TEAM TRINETRA</span>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+<script>
+    const map = L.map('map').setView([16.4437, 80.6197], 18);
+
+    // Add the OpenStreetMap tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // User location marker
+    let userMarker = null;
+
+    // Get user location using Geolocation API
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            const userLat = position.coords.latitude;
+            const userLon = position.coords.longitude;
+
+            console.log("User Latitude: ", userLat);
+            console.log("User Longitude: ", userLon);
+
+            // Add user location marker
+            userMarker = L.marker([userLat, userLon])
+                .addTo(map)
+                .bindPopup('<b>You are here!</b>')
+                .openPopup();
+
+            // Set map view to user's location
+            map.setView([userLat, userLon], 18);
+        },
+        (error) => {
+            alert('Unable to access your location. Using default location.');
+            console.error("Geolocation Error: ", error);
+
+            // Fallback: Default location (KL University)
+            const fallbackLat = 16.4437;
+            const fallbackLon = 80.6197;
+
+            userMarker = L.marker([fallbackLat, fallbackLon])
+                .addTo(map)
+                .bindPopup('<b>Default Location (KL University)</b>')
+                .openPopup();
+
+            map.setView([fallbackLat, fallbackLon], 18);
+        },
+        { enableHighAccuracy: true }
+    );
+
+    // Routing control
+    let routingControl = null;
+
+    // Add event listener for map clicks
+    map.on('click', function (e) {
+        const destinationLat = e.latlng.lat;
+        const destinationLon = e.latlng.lng;
+
+        // Remove previous routing if it exists
+        if (routingControl) {
+            map.removeControl(routingControl);
+        }
+
+        // Add routing with animated lines
+        routingControl = L.Routing.control({
+            waypoints: [
+                userMarker ? L.latLng(userMarker.getLatLng()) : null, 
+                L.latLng(destinationLat, destinationLon) 
+            ],
+            lineOptions: {
+                styles: [{ color: 'blue', weight: 4, opacity: 0.7 }]
+            },
+            routeWhileDragging: true
+        }).addTo(map);
+    });
+</script>
+
+</body>
+</html>

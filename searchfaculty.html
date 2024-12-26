@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KL Faculty, CC & HOD Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgb(255, 255, 255);
+            padding: 0px 20px;
+        }
+
+        .navbar img {
+            height: 80px;
+            width: auto;
+        }
+
+        .navbar .links {
+            display: flex;
+            justify-content: center;
+            flex-grow: 1;
+        }
+
+        .navbar a {
+            color: #fd0000;
+            text-align: center;
+            padding: 10px 15px;
+            text-decoration: none;
+            margin: 0 30px;
+        }
+
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: red;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .search-sections {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .search-section {
+            flex: 1;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 18px; /* Increased font size */
+        }
+
+        th, td {
+            text-align: left;
+            padding: 15px; /* Increased padding */
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            font-size: 20px; /* Increased header font size */
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .table-container {
+            max-height: 300px; /* Set a fixed height for the table container */
+            overflow-y: scroll; /* Enable vertical scrolling */
+            border: 1px solid #ccc; /* Optional: Add a border for better visuals */
+            margin-top: 20px;
+        }
+        <video id="background-video" autoplay muted loop>
+    <source src="calbag.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+    <img src="nakul.png" alt="Left Logo">
+    <img src="nakul1.png" alt="Right Logo">
+    <div class="links">
+        <a href="calculator.html">CGPA-Calculator</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="searchfaculty.html">Search Faculty</a>
+        <a href="searchcourses.html">Search Courses</a>
+        <a href="attendance.html">Attendance Calculator</a>
+        <a href="about.html">About Us</a>
+    </div>
+</div>
+
+<div class="container">
+    <h1>KL Faculty, CC & HOD Search</h1>
+    <div class="search-sections">
+        <!-- Faculty Search Section -->
+        <div class="search-section">
+            <h2>Faculty Search</h2>
+            <div class="search-bar">
+                <input type="text" id="searchFacultyInput" onkeyup="searchFaculty()" placeholder="Search by faculty name, cabin, or ID...">
+            </div>
+            <div class="table-container">
+                <table id="facultyTable">
+                    <thead>
+                        <tr>
+                            <th>ID Number</th>
+                            <th>Faculty Name</th>
+                            <th>Cabin</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>001</td>
+                            <td>Dr. John Doe</td>
+                            <td>C101</td>
+                        </tr>
+                        <tr>
+                            <td>002</td>
+                            <td>Dr. Jane Smith</td>
+                            <td>C102</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- CC Search Section -->
+        <div class="search-section">
+            <h2>Course Coordinator Search</h2>
+            <div class="search-bar">
+                <input type="text" id="searchCCInput" onkeyup="searchCC()" placeholder="Search by CC name, subject, or cabin...">
+            </div>
+            <div class="table-container">
+                <table id="ccTable">
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>CC Name</th>
+                            <th>Cabin</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Data Structures</td>
+                            <td>Dr. John Doe</td>
+                            <td>C201</td>
+                        </tr>
+                        <tr>
+                            <td>Operating Systems</td>
+                            <td>Dr. Jane Smith</td>
+                            <td>C202</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- HOD Search Section -->
+        <div class="search-section">
+            <h2>HOD Search</h2>
+            <div class="search-bar">
+                <input type="text" id="searchHODInput" onkeyup="searchHOD()" placeholder="Search by HOD name or department...">
+            </div>
+            <div class="table-container">
+                <table id="hodTable">
+                    <thead>
+                        <tr>
+                            <th>Department</th>
+                            <th>HOD Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Computer Science</td>
+                            <td>Dr. Alan Turing</td>
+                        </tr>
+                        <tr>
+                            <td>Mechanical Engineering</td>
+                            <td>Dr. Ada Lovelace</td>
+                        </tr>
+                        <tr>
+                            <td>Electrical Engineering</td>
+                            <td>Dr. Nikola Tesla</td>
+                        </tr>
+                        <tr>
+                            <td>Civil Engineering</td>
+                            <td>Dr. Isambard Kingdom Brunel</td>
+                        </tr>
+                        <!-- Add more rows as needed -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function searchFaculty() {
+        const input = document.getElementById('searchFacultyInput').value.toLowerCase();
+        const rows = document.querySelectorAll('#facultyTable tbody tr');
+
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            const match = Array.from(cells).some(cell => cell.textContent.toLowerCase().includes(input));
+            row.style.display = match ? '' : 'none';
+        });
+    }
+
+    function searchCC() {
+        const input = document.getElementById('searchCCInput').value.toLowerCase();
+        const rows = document.querySelectorAll('#ccTable tbody tr');
+
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            const match = Array.from(cells).some(cell => cell.textContent.toLowerCase().includes(input));
+            row.style.display = match ? '' : 'none';
+        });
+    }
+
+    function searchHOD() {
+        const input = document.getElementById('searchHODInput').value.toLowerCase();
+        const rows = document.querySelectorAll('#hodTable tbody tr');
+
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            const match = Array.from(cells).some(cell => cell.textContent.toLowerCase().includes(input));
+            row.style.display = match ? '' : 'none';
+        });
+    }
+</script>
+
+</body>
+</html>
